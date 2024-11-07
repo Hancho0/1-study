@@ -86,6 +86,8 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
     return DefWindowProc(hwnd, message, wParam, lParam);
 }
 
+// RESULT : https://github.com/Hancho0/1-study/blob/main/%EA%B2%B0%EA%B3%BC
+
 -----
 
 #include "stdafx.h": 미리 컴파일된 헤더 파일, 프로젝트 속도 최적화를 위해 사용

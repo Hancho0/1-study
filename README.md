@@ -108,4 +108,100 @@ Document Template에 대한 기본 클래스로서, 단일 문서에 관련된 C
 
 -----
 
+**[ 진행 사항 , 진행중 문제 발생 ]**
+
 https://github.com/Hancho0/1-study/blob/main/FirstProject.cpp
+
+위 코드에서 생각 하는 핵심 코드는
+
+1. 윈도우 클래스 등록과 생성
+
+WNDCLASS WndClass;
+WndClass.style = CS_HREDRAW | CS_VREDRAW;
+WndClass.lpfnWndProc = WinProc;
+WndClass.hInstance = hInstance;
+WndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+WndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+WndClass.lpszClassName = TEXT("MouseClass");
+
+if (!RegisterClass(&WndClass))
+    return 1;
+
+hwnd = CreateWindow(
+    TEXT("MouseClass"),
+    TEXT("MouseSDK"),
+    WS_OVERLAPPEDWINDOW,
+    CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+    NULL, NULL, hInstance, NULL
+);
+ShowWindow(hwnd, nCmdShow);
+
+윈도우 클래스 등록 하고
+CreateWindow 함수로 윈도우를 생성하고 ShowWindow로 화면에 표시하기에 핵심코드라고 생각합니다.
+
+2. 메세지 루프
+
+while (GetMessage(&msg, NULL, 0, 0) > 0) {
+    TranslateMessage(&msg);
+    DispatchMessage(&msg);
+}
+
+윈도우가 생성된 후, 프로그램은 메세지 루프를 통해 윈도우가 종료 될때 까지 사용지 입력 이벤트를 처리함으로써 핵심코드라고 생각합니다.
+
+3. 윈도우 프로시저(핸들링 함수) - WinProc
+
+LRESULT CALLBACK WinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
+    switch (message) {
+        case WM_LBUTTONDOWN:
+            MessageBox(hwnd, TEXT("왼쪽 마우스를 클릭하셨습니다."), TEXT("왼쪽 마우스 클릭!"), MB_OK);
+            return 0;
+        case WM_RBUTTONDOWN:
+            MessageBox(hwnd, TEXT("오른쪽 마우스를 클릭하셨습니다."), TEXT("오른쪽 마우스 클릭!"), MB_OK);
+            return 0;
+        case WM_PAINT:
+            hdc = BeginPaint(hwnd, &ps);
+            TextOut(hdc, 100, 100, str1, lstrlen(str1));
+            TextOut(hdc, 100, 130, str2, lstrlen(str2));
+            EndPaint(hwnd, &ps);
+            return 0;
+        case WM_DESTROY:
+            PostQuitMessage(0);
+            return 0;
+    }
+    return DefWindowProc(hwnd, message, wParam, lParam);
+}
+
+마우스 왼쪽 / 오른쪽 클릭 이벤트 처리하며 MessageBox를 통해서 출력되는 코드로써
+WM_PAINT를 활용하여 왼도우를 그릴 때 호출되는 TextOut을 이용해 텍스트를 화면에 출력하고
+WM_DESTORY 를 이용해 윈도우 종료 시 호출하며, PostQuitMessage로 프로그램을 종료함으로써
+핵심 코드 라고 생각합니다.
+
+[ 오류 발생 ]
+https://github.com/Hancho0/1-study/blob/main/오류.png
+
+WndProc가 선언되지 않는 식별자라는 오류가 발생하여 코드를 확인해보니
+
+TextOut(hdc, 100, 100, str1, lstrlen(str1));
+TextOut(hdc, 100, 130, str1, lstrlen(str2));
+실수로 붙여넣기 한 후 수정을 제대로 하지 못해 WndProc가 올바르게 작동하지 못하여 선언되지 못하였다고 떴습니다.
+
+그래서 
+TextOut(hdc, 100, 100, str1, lstrlen(str1));
+TextOut(hdc, 100, 130, str2, lstrlen(str2));
+코드를 올바르게 수정해서 정상적으로 작동 되었습니다.
+
+그리고 #include "stdafx.h"가 정상적으로 헤더파일 인식이 안되어
+Visual Studio 에서 "미리 컴파일된 헤더" 를 사용으로 변경해줬으며
+추가로 stdafx.cpp 파일에서 #include "stdafx.h"를 넣어주고 "미리 컴파일된 헤더"를 만들기로 설정해준후 헤더 파일에 stdafx.h를 추가해줬으며 내부에는
+#pragma once
+
+#include <Windows.h>
+#include <tchar.h>
+코드를 넣어줬더니 #include "stdafx.h" 이 정상적으로 헤더파일로 인식되었습니다.
+
+-----
+
+**[ 이번 Study를 통해 느낀점 ]**
+
+조금 복잡하다고 생각한 코드를 직접 다뤄보면서 C++에 대한 이론에 대해 공부를 해보니, 어려웠지만 흥미롭게 받아들였습니다. 1주차 개발공부이지만 부족한 모습이 보여서 추가적인 개인적인 독학 공부가 더 필요하다고 느꼈으며, 반복적인 복습 및 모르는 코드에 대해 좀더 딥하게 공부하고 싶다는 생각이 들었습니다. C++은 이번에 처음 다뤄보지만 재밌게 배워보는 시간이었습니다. 주말에 남는 시간에 여기저기 블로그를 참고하면서 좀더 즐거운 공부하는 시간을 가지고 싶다는 생각이 들었습니다. 저에대해 좀더 알아가보는 시간이었으며 개인적인 개발역량을 늘릴려면 좀더 반복적인 복습이 필요하다는 생각이 들었습니다.

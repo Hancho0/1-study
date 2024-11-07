@@ -86,7 +86,7 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
     return DefWindowProc(hwnd, message, wParam, lParam);
 }
 
-// RESULT : https://github.com/Hancho0/1-study/blob/main/%EA%B2%B0%EA%B3%BC
+// RESULT : https://github.com/Hancho0/1-study/blob/main/결과.png
 
 -----
 

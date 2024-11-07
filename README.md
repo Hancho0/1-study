@@ -105,3 +105,7 @@ Document Template에 대한 기본 클래스로서, 단일 문서에 관련된 C
 * CView
 
 작업영역을 나타내는 클래스로서 데이터를 화면에 보일 수 있도록 처리하는 클래스이다.
+
+-----
+
+https://github.com/Hancho0/1-study/blob/main/FirstProject.cpp

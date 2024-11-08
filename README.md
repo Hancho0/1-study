@@ -123,24 +123,37 @@ https://github.com/Hancho0/1-study/blob/main/FirstProject.cpp
 1. 윈도우 클래스 등록과 생성
 
 WNDCLASS WndClass;
+
 WndClass.style = CS_HREDRAW | CS_VREDRAW;
+
 WndClass.lpfnWndProc = WinProc;
+
 WndClass.hInstance = hInstance;
+
 WndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+
 WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+
 WndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+
 WndClass.lpszClassName = TEXT("MouseClass");
 
 if (!RegisterClass(&WndClass))
     return 1;
 
 hwnd = CreateWindow(
+
     TEXT("MouseClass"),
+
     TEXT("MouseSDK"),
+
     WS_OVERLAPPEDWINDOW,
+
     CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+
     NULL, NULL, hInstance, NULL
 );
+
 ShowWindow(hwnd, nCmdShow);
 
 윈도우 클래스 등록 하고
@@ -151,7 +164,9 @@ CreateWindow 함수로 윈도우를 생성하고 ShowWindow로 화면에 표시�
 2. 메세지 루프
 
 while (GetMessage(&msg, NULL, 0, 0) > 0) {
+
     TranslateMessage(&msg);
+
     DispatchMessage(&msg);
 }
 
@@ -162,23 +177,40 @@ while (GetMessage(&msg, NULL, 0, 0) > 0) {
 3. 윈도우 프로시저(핸들링 함수) - WinProc
 
 LRESULT CALLBACK WinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
+
     switch (message) {
+
         case WM_LBUTTONDOWN:
+
             MessageBox(hwnd, TEXT("왼쪽 마우스를 클릭하셨습니다."), TEXT("왼쪽 마우스 클릭!"), MB_OK);
+
             return 0;
+
         case WM_RBUTTONDOWN:
+
             MessageBox(hwnd, TEXT("오른쪽 마우스를 클릭하셨습니다."), TEXT("오른쪽 마우스 클릭!"), MB_OK);
+
             return 0;
+
         case WM_PAINT:
+
             hdc = BeginPaint(hwnd, &ps);
+
             TextOut(hdc, 100, 100, str1, lstrlen(str1));
+
             TextOut(hdc, 100, 130, str2, lstrlen(str2));
+
             EndPaint(hwnd, &ps);
+
             return 0;
+
         case WM_DESTROY:
+
             PostQuitMessage(0);
+
             return 0;
     }
+
     return DefWindowProc(hwnd, message, wParam, lParam);
 }
 

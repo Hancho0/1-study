@@ -227,21 +227,31 @@ https://github.com/Hancho0/1-study/blob/main/오류.png
 WndProc가 선언되지 않는 식별자라는 오류가 발생하여 코드를 확인해보니
 
 TextOut(hdc, 100, 100, str1, lstrlen(str1));
+
 TextOut(hdc, 100, 130, str1, lstrlen(str2));
+
 실수로 붙여넣기 한 후 수정을 제대로 하지 못해 WndProc가 올바르게 작동하지 못하여 선언되지 못하였다고 떴습니다.
 
 그래서 
+
 TextOut(hdc, 100, 100, str1, lstrlen(str1));
+
 TextOut(hdc, 100, 130, str2, lstrlen(str2));
+
 코드를 올바르게 수정해서 정상적으로 작동 되었습니다.
 
 그리고 #include "stdafx.h"가 정상적으로 헤더파일 인식이 안되어
+
 Visual Studio 에서 "미리 컴파일된 헤더" 를 사용으로 변경해줬으며
+
 추가로 stdafx.cpp 파일에서 #include "stdafx.h"를 넣어주고 "미리 컴파일된 헤더"를 만들기로 설정해준후 헤더 파일에 stdafx.h를 추가해줬으며 내부에는
+
 #pragma once
 
 #include <Windows.h>
+
 #include <tchar.h>
+
 코드를 넣어줬더니 #include "stdafx.h" 이 정상적으로 헤더파일로 인식되었습니다.
 
 -----

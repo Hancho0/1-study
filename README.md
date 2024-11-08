@@ -114,6 +114,8 @@ https://github.com/Hancho0/1-study/blob/main/FirstProject.cpp
 
 위 코드에서 생각 하는 핵심 코드는
 
+-----
+
 1. 윈도우 클래스 등록과 생성
 
 WNDCLASS WndClass;
@@ -140,6 +142,8 @@ ShowWindow(hwnd, nCmdShow);
 윈도우 클래스 등록 하고
 CreateWindow 함수로 윈도우를 생성하고 ShowWindow로 화면에 표시하기에 핵심코드라고 생각합니다.
 
+-----
+
 2. 메세지 루프
 
 while (GetMessage(&msg, NULL, 0, 0) > 0) {
@@ -148,6 +152,8 @@ while (GetMessage(&msg, NULL, 0, 0) > 0) {
 }
 
 윈도우가 생성된 후, 프로그램은 메세지 루프를 통해 윈도우가 종료 될때 까지 사용지 입력 이벤트를 처리함으로써 핵심코드라고 생각합니다.
+
+-----
 
 3. 윈도우 프로시저(핸들링 함수) - WinProc
 
@@ -176,6 +182,8 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) 
 WM_PAINT를 활용하여 왼도우를 그릴 때 호출되는 TextOut을 이용해 텍스트를 화면에 출력하고
 WM_DESTORY 를 이용해 윈도우 종료 시 호출하며, PostQuitMessage로 프로그램을 종료함으로써
 핵심 코드 라고 생각합니다.
+
+-----
 
 [ 오류 발생 ]
 https://github.com/Hancho0/1-study/blob/main/오류.png
